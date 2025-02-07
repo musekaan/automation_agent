@@ -19,7 +19,7 @@ def run_task(task: str):
             response = requests.get(url)
             with open("datagen.py", "w", encoding="utf-8") as file:
                 file.write(response.text)
-            user_email = "example email"
+            user_email = "24ds1000079@ds.study.iitm.ac.in"  # Replace with the actual email
             subprocess.run(["python", "datagen.py", user_email], check=True)
             return {"status": "success", "message": "Task A1 completed successfully"}
 
@@ -28,7 +28,7 @@ def run_task(task: str):
             file_path = f"{DATA_DIR}/format.md"
             if not os.path.exists(file_path):
                 return {"status": "error", "message": "File not found"}
-            subprocess.run(["prettier", "--write", file_path], check=True)
+            subprocess.run(["npx", "prettier", "--write", file_path], check=True)
             return {"status": "success", "message": "Task A2 completed successfully"}
 
         # Task A3: Count Wednesdays in /data/dates.txt
@@ -54,6 +54,7 @@ def run_task(task: str):
             with open(f"{DATA_DIR}/contacts-sorted.json", "w", encoding="utf-8") as file:
                 json.dump(sorted_contacts, file, indent=4)
             return {"status": "success", "message": "Task A4 completed successfully"}
+
         # Task A5: Write first line of 10 most recent .log files
         elif "recent logs" in task.lower():
             log_dir = f"{DATA_DIR}/logs"
@@ -72,7 +73,8 @@ def run_task(task: str):
             with open(f"{DATA_DIR}/logs-recent.txt", "w", encoding="utf-8") as file:
                 file.write("\n".join(lines))
             return {"status": "success", "message": "Task A5 completed successfully"}
-       # Task A6: Extract H1 titles from Markdown files
+
+        # Task A6: Extract H1 titles from Markdown files
         elif "index markdown" in task.lower():
             docs_dir = f"{DATA_DIR}/docs"
             if not os.path.exists(docs_dir):
@@ -100,4 +102,4 @@ def read_file(path: str = Query(..., description="File path to read")):
         return {"status": "error", "message": "File not found"}
     with open(path, "r", encoding="utf-8") as file:
         content = file.read()
-    return {"status": "success", "content":content}
+    return {"status": "success", "content": content}
